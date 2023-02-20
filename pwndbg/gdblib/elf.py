@@ -241,6 +241,24 @@ def get_ehdr(pointer):
     if pwndbg.gdblib.qemu.is_qemu():
         return None, None
 
+    # TODO/FIXME: Workaround
+    addr = pwndbg.lib.memory.page_align(int(pointer))
+    try:
+        for i in range(1024):
+            if pwndbg.gdblib.memory.read(addr, 4) == b"\x7fELF":
+                base = addr
+
+                # Determine whether it's 32- or 64-bit
+                ei_class = pwndbg.gdblib.memory.byte(base + 4)
+
+                # Find out where the section headers start
+                Elfhdr = read(Ehdr, base)
+                return ei_class, Elfhdr
+            addr -= 4096
+    except Exception as e:
+        print("WYJATEK", e)
+        return None, None
+
     vmmap = pwndbg.gdblib.vmmap.find(pointer)
     base = None
 
