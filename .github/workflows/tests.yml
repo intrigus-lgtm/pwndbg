@@ -52,7 +52,12 @@ jobs:
 
     - name: "Upload coverage to Codecov"
       if: matrix.os == 'ubuntu-22.04'
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v3    
+    - name: Setup tmate session
+      if: ${{ always() }}
+      uses: mxschmitt/action-tmate@v3
+      timeout-minutes: 60
+
 
   qemu-tests:
     runs-on: [ubuntu-22.04]
@@ -102,6 +107,3 @@ jobs:
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
-    - name: Setup tmate session
-      if: ${{ always() }}
-      uses: mxschmitt/action-tmate@v3
