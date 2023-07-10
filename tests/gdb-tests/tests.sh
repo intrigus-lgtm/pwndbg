@@ -32,7 +32,7 @@ help_and_exit() {
     exit 1
 }
 
-if [[ $# -gt 3 ]]; then
+if [[ $# -gt 4 ]]; then
     help_and_exit
 fi
 
