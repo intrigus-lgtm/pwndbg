@@ -38,7 +38,7 @@ jobs:
       run: |
         mkdir .cov
         sudo sysctl -w kernel.yama.ptrace_scope=0
-        PWNDBG_GITHUB_ACTIONS_TEST_RUN=1 ./tests.sh --cov test_m
+        PWNDBG_GITHUB_ACTIONS_TEST_RUN=1 ./tests.sh --serial --cov test_m
         ls -la ./.cov/
 
     - name: Process coverage data
@@ -53,10 +53,10 @@ jobs:
     - name: "Upload coverage to Codecov"
       if: matrix.os == 'ubuntu-22.04'
       uses: codecov/codecov-action@v3    
-    - name: Setup tmate session
-      if: ${{ always() }}
-      uses: mxschmitt/action-tmate@v3
-      timeout-minutes: 60
+    # - name: Setup tmate session
+    #   if: ${{ always() }}
+    #   uses: mxschmitt/action-tmate@v3
+    #   timeout-minutes: 60
 
 
   qemu-tests:
