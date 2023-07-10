@@ -96,7 +96,7 @@ echo "ZIGPATH set to $ZIGPATH"
 (cd ./tests/binaries && make all) || exit 1
 
 run_gdb() {
-    echo "WILL RUN: gdb --silent --nx --nh \"$@\" --eval-command quit"
+    # echo "WILL RUN: gdb --silent --nx --nh \"$@\" --eval-command quit"
     gdb --silent --nx --nh "$@" --eval-command quit
 }
 
@@ -120,7 +120,7 @@ run_test() {
 
     gdb_args=(--command $GDB_INIT_PATH --command pytests_launcher.py)
     if [ ${RUN_CODECOV} -ne 0 ]; then
-        gdb_args=(-ex 'py import coverage;coverage.process_startup()' "${gdb_args[@]}")
+        gdb_args=(-ex 'py import sys;print(sys.path);import coverage;coverage.process_startup()' "${gdb_args[@]}")
     fi
     SRC_DIR=$ROOT_DIR \
         COVERAGE_FILE=$ROOT_DIR/.cov/coverage \
