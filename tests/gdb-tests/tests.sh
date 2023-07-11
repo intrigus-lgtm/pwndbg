@@ -182,7 +182,7 @@ else
     fi
 
     # The `--env _` is required when using `--record-env`
-    env_parallel --output-as-files --joblog $JOBLOG_PATH run_test ::: "${TESTS_LIST[@]}" | env_parallel parse_output_file {}
+    env_parallel --env _ --output-as-files --joblog $JOBLOG_PATH run_test ::: "${TESTS_LIST[@]}" | env_parallel --env _ parse_output_file {}
 fi
 
 end=$(date +%s)

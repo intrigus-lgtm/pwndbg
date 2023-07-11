@@ -24,6 +24,7 @@ jobs:
 
     - name: Python version info
       run: |
+        #sudo pip uninstall coverage --break-system-packages || sudo pip uninstall coverage || true
         echo 'GDB py:'
         gdb --batch --quiet --nx --nh --ex 'py import sys; print(sys.version)'
         echo 'Installed py:'
@@ -53,10 +54,10 @@ jobs:
     - name: "Upload coverage to Codecov"
       if: matrix.os == 'ubuntu-22.04'
       uses: codecov/codecov-action@v3    
-    - name: Setup tmate session
-      if: ${{ always() }}
-      uses: mxschmitt/action-tmate@v3
-      timeout-minutes: 60
+    # - name: Setup tmate session
+    #   if: ${{ always() }}
+    #   uses: mxschmitt/action-tmate@v3
+    #   timeout-minutes: 60
 
 
   qemu-tests:
